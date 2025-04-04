@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Purchase } from '../purchases/Purchase';
 import { Role, Language } from './types';
 
 @Entity('users')
@@ -46,6 +46,9 @@ export class User {
   @Column()
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => Purchase, (purchase) => purchase.user)
+  purchases: Purchase[];
 
   setLanguage(language: Language) {
     this.language = language;
